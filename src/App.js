@@ -1,5 +1,5 @@
 import "./App.css";
-import aixos from "axios";
+// import aixos from "axios";
 import { useState, useEffect } from "react";
 
 // https://gateway.marvel.com:443/v1/public/characters?apikey=8528bf2bc67a9510e88b971211d775bf
@@ -12,16 +12,19 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [personajes, setPersonajes] = useState([]);
+
   useEffect(() => {
-    aixos
-      .get(
-        "https://gateway.marvel.com:443/v1/public/characters?ts=1&apikey=8528bf2bc67a9510e88b971211d775bf&hash=1b9354f69edaf3dc411fe168d79b0811"
-      )
-      .then((res) => {
-        setPersonajes(res.data.data.results);
-      })
-      .catch((error) => console.log(error));
+    // console.log(personajes);
+    fetch(
+      "https://gateway.marvel.com:443/v1/public/characters?ts=1&apikey=8528bf2bc67a9510e88b971211d775bf&hash=1b9354f69edaf3dc411fe168d79b0811"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setPersonajes(data.data.results);
+        console.log(data.data.results);
+      });
   }, []);
+
   return (
     <div className="App">
       <h1>Marvel</h1>
